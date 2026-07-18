@@ -1,19 +1,26 @@
-function updateClock() {
+function calculateAge() {
 
-    let now = new Date();
+    let dob = document.getElementById("dob").value;
 
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
+    if (dob === "") {
+        alert("Please select your date of birth.");
+        return;
+    }
 
-    hours = String(hours).padStart(2, "0");
-    minutes = String(minutes).padStart(2, "0");
-    seconds = String(seconds).padStart(2, "0");
+    let birthDate = new Date(dob);
+    let today = new Date();
 
-    document.getElementById("clock").innerHTML =
-        `${hours}:${minutes}:${seconds}`;
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    let month = today.getMonth() - birthDate.getMonth();
+
+    if (
+        month < 0 ||
+        (month === 0 && today.getDate() < birthDate.getDate())
+    ) {
+        age--;
+    }
+
+    document.getElementById("result").innerHTML =
+        "Your Age is " + age + " years.";
 }
-
-updateClock();
-
-setInterval(updateClock, 1000);
